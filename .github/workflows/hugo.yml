@@ -20,14 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true  # fetch theme if it's a git submodule
+          submodules: true   # pull theme submodules if any
       - uses: actions/setup-node@v4
         with:
-          node-version: '20' # needed for Hugo Blox asset pipeline
+          node-version: '20' # Hugo Blox asset pipeline needs Node
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
           extended: true
+      # Optional: verify Hugo sees your config and baseURL
+      - run: hugo config
       - run: hugo --minify --baseURL "https://stampnews.github.io/epistat/"
       - uses: actions/upload-pages-artifact@v3
         with:
